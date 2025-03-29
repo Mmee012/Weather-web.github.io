@@ -4,12 +4,12 @@
 <head>
     <title>Weather search</title>
     <meta charset="utf-8">
+    <meta name="theme-color" content="#a1c4ff" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="header"></div>
     <div class="search">
         <input type="text" id="search-txt" placeholder="Enter city name">
         <a href="#" id="search-a">&#128269;</a>
@@ -17,6 +17,7 @@
     <div class="main-content">
         <div id="content">
             <div class="left">
+                <button id="theme-btn"></button>
                 <p id="time-zone">HH:MM</p>
                 <p id="city-img">      
                     <span id="city">-</span>
@@ -53,7 +54,12 @@
                     </div>
                 </div>
                 <div id="img-box">
-                    <div id="img-weather"></div>
+                    <div class="imgWeather">
+                        <div class="sun"></div>
+                        <div class="cloud1"></div>
+                        <div class="cloud2"></div>
+                        <div class="cloud3"></div>
+                    </div>
                 </div>
             </div>
         </div>
