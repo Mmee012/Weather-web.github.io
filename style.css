@@ -191,7 +191,7 @@ body {
 .cloud1-night {
     width: 100%;
     height: 100%;
-    background-image: url(nightStar.png);
+    background-image: url(https://github.com/Mmee012/Weather-web.github.io/blob/main/nightStar.png?raw=true);
     background-size: cover;
     background-position: center;
     filter: drop-shadow(0 0 3px #ffffff);
@@ -222,7 +222,7 @@ body {
 .cloud1-day {
     width: 17%;
     height: 50%;
-    background-image: url(1.png);
+    background-image: url(https://github.com/Mmee012/Weather-web.github.io/blob/main/1.png?raw=true);
     background-size: 100% 100%;
     filter: drop-shadow(0 0 3px #ffffff);
     position: absolute;
@@ -233,7 +233,7 @@ body {
 .cloud2-day {
     width: 20%;
     height: 58%;
-    background-image: url(2.png);
+    background-image: url(https://github.com/Mmee012/Weather-web.github.io/blob/main/2.png?raw=true);
     background-size: 100% 100%;
     filter: drop-shadow(0 0 3px #ffffff);
     position: absolute;
@@ -244,7 +244,7 @@ body {
 .cloud3-day {
     width: 20%;
     height: 53%;
-    background-image: url(3.png);
+    background-image: url(https://github.com/Mmee012/Weather-web.github.io/blob/main/3.png?raw=true);
     background-size: 100% 100%;
     filter: drop-shadow(0 0 3px #ffffff);
     position: absolute;
