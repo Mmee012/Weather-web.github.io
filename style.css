@@ -4,7 +4,37 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
+    transition: 0.5s;
 }
+body{
+    min-height: 100vh;
+}
+
+/*dark mode*/
+.dark-theme {
+    background-color: #474747;
+    color: #E4E5E5;
+}
+.dark-theme #content {
+    background-color: #343434;
+    color: #E4E5E5;
+    box-shadow: 10px 10px 20px rgba(0.1, 0.1, 0.1, 0.2);
+}
+.dark-theme #search-txt {
+    background-color: #c1c1c1;
+    color: #000000;
+    box-shadow: 10px 10px 20px rgba(0.1, 0.1, 0.1, 0.2);
+    border: rgb(129, 129, 129) 4px solid;
+}
+.dark-theme #theme-btn {
+    background-color: #E4E5E5;
+    border: 3px solid rgb(169, 169, 169);
+}
+.dark-theme #theme-btn:hover {
+    background-color: #343434;
+    border: 3px solid rgb(117, 117, 117);
+}
+
 
 #search-txt {
     background-color: #E4E5E5;
@@ -19,6 +49,7 @@ body {
     width: 80px;
     transition: 1s;
     box-shadow: 10px 10px 20px rgba(0.1, 0.1, 0.1, 0.2);
+    border: rgb(78, 78, 78) 4px solid;
 }
 
 #search-txt:hover,
@@ -63,18 +94,18 @@ body {
     font-size: 25px;
 }
 
-#M-N {
+#MaxMin {
     margin-left: 12px;
     display: flex;
     gap: 35px;
 }
 
-#H-L {
+#HighLow {
     margin-left: 20px;
     margin-top: 70px;
 }
 
-#H-L p {
+#HighLow p {
     margin-bottom: -10px;
     font-weight: bold;
 }
@@ -98,6 +129,8 @@ body {
     align-items: center;
     display: flex;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+    transition: 0.5s;
+
 }
 
 .left {
@@ -114,17 +147,14 @@ body {
     left: 80%;
     background-color: #343434;
     border: 3px solid rgb(117, 117, 117);
-    transition: 0.5s;
+    transition: 0.36s;
 }
 
-#theme-color:hover {
+#theme-btn:hover {
     background-color: #cecece;
     border: 3px solid rgb(169, 169, 169);
 }
-#theme-color:active{
-    background-color: #ffffff;
-    transition: 0s;
-}
+
 
 .right {
     height: 100%;
@@ -258,11 +288,13 @@ body {
     html,
     body {
         font-family: Arial, Helvetica, sans-serif;
-    }
 
+    }
+    
     .main-content {
         max-width: 600px;
         margin-top: -25px;
+        margin-bottom: -100%;
     }
 
     #content {
@@ -283,13 +315,13 @@ body {
         font-size: 20px;
     }
 
-    #H-L {
+    #HighLow {
         margin-top: -30px;
         text-align: end;
         margin-right: 10px;
     }
 
-    #M-N {
+    #MaxMin {
         justify-content: end;
         margin-right: 6px;
     }
@@ -329,6 +361,7 @@ body {
 
     #img-box {
         margin-top: 20px;
+        width: 100%;
     }
 
     .imgWeather {

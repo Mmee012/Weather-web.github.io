@@ -24,7 +24,7 @@ function enterPressed(event) {
 //รับ input เพื่อไปหาข้อมูล
 function findWeatherDetails() {
     if (searchInput.value === "") {
-        
+
     }
     else {
         const searchLink = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput.value + "&appid=" + appkey;
@@ -36,7 +36,7 @@ function findWeatherDetails() {
 function theResponse(response) {
     const jsonObject = JSON.parse(response);
     const Now = convertToUTC(jsonObject.timezone * 1000);
-    
+
     cityName.innerHTML = jsonObject.name;
     countyName.innerHTML = jsonObject.sys.country;
     icon.src = "http://openweathermap.org/img/w/" + jsonObject.weather[0].icon + ".png";
@@ -46,17 +46,17 @@ function theResponse(response) {
     celsius.innerHTML = parseInt(jsonObject.main.temp - 273.15) + "°";
     fahrenheit.innerHTML = parseInt((jsonObject.main.temp - 273.15) * 9 / 5 + 32) + "°";
     timezone.innerHTML = Now;
-    
-    
+
+
 }
 
 //HttpRequest
 function httpRequestAsync(url, callback) {
     //สร้างอินสแตนซ์ของซึ่งใช้ในการส่งคำขอ HTTP
     const httpRequest = new XMLHttpRequest();
-    
+
     httpRequest.onreadystatechange = () => {
-        
+
         //httpRequest.readyState == 4 หมายถึง การรับข้อมูลเสร็จสมบูรณ์ 
         //httpRequest.status == 200 หมายถึง คำขอสำเร็จ (HTTP Status 200 OK)
         if (httpRequest.readyState == 4 && httpRequest.status == 200) {
@@ -73,19 +73,19 @@ function convertToUTC(offsetMillis) {
     const localTime = new Date(now.getTime() + offsetMillis);
     const HH = parseInt(localTime.toISOString().split('T')[1].split(':')[0]);
     const utcTime = now.toISOString().split('T')[1].split(':').slice(0, 2).join(':');
-    
+
     /*console.log(`Local Time (Offset: ${offsetMillis} ms): ${localTime.toISOString().split('T')[1].split('.')[0]}`);
     console.log(`UTC Time: ${utcTime}`);*/
-    
-    if(HH >= 19 || HH < 6){
+
+    if (HH >= 19 || HH < 6) {
         Night(HH);
-        }
-        else {
-            Day(HH);
     }
-   
-   //return HH:MM
-   return localTime.toISOString().split('T')[1].split(':').slice(0, 2).join(':');
+    else {
+        Day(HH);
+    }
+
+    //return HH:MM
+    return localTime.toISOString().split('T')[1].split(':').slice(0, 2).join(':');
 }
 
 //ส่วนของตกแต่ง css
@@ -95,67 +95,85 @@ const cloud1 = document.querySelectorAll(".cloud1");
 const cloud2 = document.querySelectorAll(".cloud2");
 const cloud3 = document.querySelectorAll(".cloud3");
 
+var c = window.matchMedia("(max-width: 700px)");
+
 //แปลงเวลาให้เป็นเปอร์เซ็น เช่น 6.pm - 19.pm เป็น 1% - 100%
 function mapRange(value, inMin, inMax, outMin, outMax) {
 
-    if (value >= 0 && value <= 5){
+    if (value >= 0 && value <= 5) {
         return (((value + 24) - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
     }
     //      (ค่าเวลา - เวลาต่ำสุด) * (%ต่ำสุด - %สูงสุด) / (เวลาสูงสุด - เวลาต่ำสุด) + %ต่ำสุด
-    else{
+    else {
         return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
     }
 }
 
+function Mediaquery(element, screen, outmin, outmax){
+    screen.onchange = (e) =>{
+        if (e.matches){
+            element.style.left = (mapRange(hours, 6, 19, 1, outmin)) + "%";
+        }else{
+            element.style.left = (mapRange(hours, 6, 19, 1, outmax)) + "%";
+        }
+}}
+
 //แสดงหน้า css ตามเวลา
-function Night(hours){
+function Night(hours) {
     weather.forEach(W => {
         W.classList.add("imgWeather-night");
-        W.classList.remove("imgWeather-day");
-    })
+        W.classList.replace("imgWeather-day", "imgWeather-night");
+    });
     sunday.forEach(sun => {
         sun.classList.add("sun-night");
-        sun.classList.remove("sun-day");
-        sun.style.left = (mapRange(hours, 19, 29, 1, 100)) + "%";
-    })
-    cloud1.forEach(c1 => {
-        c1.classList.add("cloud1-night");
-        c1.classList.remove("cloud1-day");
-    })
-    cloud2.forEach(c2 => {
-        c2.classList.add("cloud2-night");
-        c2.classList.remove("cloud2-day");
-    })
-    cloud3.forEach(c3 => {
-        c3.classList.add("cloud3-night");
-        c3.classList.remove("cloud3-day");
-    })
+        sun.classList.replace("sun-day", "sun-night");
+        if (c.matches){
+            sun.style.left = (mapRange(hours, 19, 29, 1, 80)) + "%";
+        }else{
+            sun.style.left = (mapRange(hours, 19, 29, 1, 90)) + "%";
+        }
+        Mediaquery(sun, c, 80, 90);
+    });
+    [cloud1, cloud2, cloud3].forEach((array, index) => {
+        array.forEach(clouds => { 
+            clouds.classList.add(`cloud${index + 1}-night`);
+            clouds.classList.replace(`cloud${index + 1}-day`, `cloud1-night`);
+        });
+    });
+
 }
 
 //แสดงหน้า css ตามเวลา
-function Day(hours){
+function Day(hours) {
     weather.forEach(W => {
         W.classList.add("imgWeather-day");
-        W.classList.remove("imgWeather-night");
-    })
+        W.classList.replace("imgWeather-night", "imgWeather-day");
+    });
     sunday.forEach(sun => {
         sun.classList.add("sun-day");
-        sun.classList.remove("sun-night");
-        sun.style.left = (mapRange(hours, 6, 19, 1, 100)) + "%";
-    })
-    cloud1.forEach(c1 => {
-        c1.classList.add("cloud1-day");
-        c1.classList.remove("cloud1-night");
-    })
-    cloud2.forEach(c2 => {
-        c2.classList.add("cloud2-day");
-        c2.classList.remove("cloud2-night");
-    })
-    cloud3.forEach(c3 => {
-        c3.classList.add("cloud3-day");
-        c3.classList.remove("cloud3-night");
-    })
+        sun.classList.replace("sun-night", "sun-day");
+        if (c.matches){
+            sun.style.left = (mapRange(hours, 6, 19, 1, 100)) + "%";
+        }else{
+            sun.style.left = (mapRange(hours, 6, 19, 1, 90)) + "%";
+        }
+        Mediaquery(sun, c, 100, 90);
+    });
+    [cloud1, cloud2, cloud3].forEach((array, index) => {
+        array.forEach(clouds => {
+            clouds.classList.add(`cloud${index + 1}-day`);
+            clouds.classList.replace(`cloud${index + 1}-night`, `cloud${index + 1}-day`);
+        });
+    });
 }
 
 //theme btn
-const themeBtn = document.getElementById("#theme-Btn")
+function theme() {
+    const body = document.body;
+    const html = document.html;    
+
+    body.classList.toggle("dark-theme");
+    html.forEach(html => {
+        html.style.backgroundColor = "#474747";
+    });
+}
